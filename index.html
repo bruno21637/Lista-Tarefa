@@ -5,63 +5,151 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Tarefas</title>
+
+    <style>
+		.content{
+			max-width: 400px;
+			max-height: 600px;
+			margin: auto;
+			background: #f3f3f3;
+			height: 450px;
+			padding: 2%;
+			border:1px solid;
+		}
+		.content h1{
+			text-align: center;
+
+		}
+		input[type=text]{
+			width: 80%;
+			height: 30px;
+			margin-bottom: 10px;
+		}
+		input[type=button]{
+			border: none;
+			width: 17%;
+			float: right;
+			height: 35px;
+		}
+		button:hover, input[type=button]:hover{
+			background: #ccc;
+		}
+
+		button, input[type=button]{ cursor: pointer; }
+
+		button{
+			float: right;
+			width: 25px;
+			padding: 5px;
+		}
+		ul{
+			list-style-type: none;
+			padding: 10px;
+			height: 250px;
+			background: #fff;
+			overflow-y: auto;
+		}
+		li{
+			height: 40px;
+			margin: 15px 0 15px 0;
+			border-bottom: 1px solid;
+
+
+		}
+
+
+	</style>
 </head>
-<body>
-    <h1>Adicione a baixo suas tarefas</h1>
-    <div class=" lista">
-        <input type="text" value="tarefa">
+<body style="background-color: aqua;">
+    <div class='content'>
+		
 
-        <button onclick="myFunction()" value="add tarefa" style=" background-color: #4c56af;
-        border: none;
-        color: rgb(255, 255, 255);
-        padding: 15px 32px;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;">Adicionar tarefa</button>
-        <ul id=" minha lista">
-            <li> Intem 1 </li>
-           
-        </ul>
-    </div>
+        <div class="row">
+                
+                <div class="col-12">
+                    <h1> Lista de Tarefas </h1>
+                    <form>
 
-    <script type="text/javascript">
-        var ul = document.getElementById("Minha lista");
-        var li;
-        var itemid;
-        var item;
+                        <input type="text" name="task" id='task' placeholder="Novo Item..." />
+                        <input type="button" name="" 
+                                onclick="addTask();" 
+                                value="add tarefa"/>
 
+                    </form>
 
-     addtarefa = function (){
-         if (document.getElementById("tarefa").value != ""){
-             item = document.getElementById("tarefa").value;
-             itemid = ul.clildElementCount;
-             li = createItemEl(itemid);
-             li.appendChild(createRemoverTarefa)
+                </div>
 
-         }
-     }
-     removertarefa =function(){
+        </div>
+    <div>
+      
+                    <label>Adicione uma tarefa</label>
+                    <ul id="myList">	
 
-     }
+                    </ul>
 
-     createItemEl = function(itemValue, itemId) {
-        let li = document.createElement("li");
-        li.setAttribute("index", itemid);
-        li.appendChild(document.createTextNode(itemValue));
-        return li;
+                </div>
+                
 
-     }
+            
 
-     tarefa = function (itemid){
-         let btn = document.createItemEl("button")
-    btn.setAttribute("onclick", removertarefa("++"));
-    btn.innetHTML = "X";
+</div>
 
 
-     }
+<script type="text/javascript">
 
+var ul = document.getElementById("myList");
+var li;
+var itemId;
+var item;
+addTask	= function (){
+    
+    if(document.getElementById("task").value != ""){
+
+        item   = document.getElementById("task");
+
+        itemId = ul.childElementCount;
+
+        li 	   = createItemEl(item.value,itemId);
+        li.appendChild(createRemoveTaskBtn(itemId));
+        ul.appendChild(li);
+        item.value = "";
+    }
+
+}
+
+removeTask = function( itemId ){
+
+    for( i = 0 ; i < ul.children.length ; i++){
+
+        if(ul.children[i].getAttribute("index") == itemId ){
+
+            ul.children[i].remove();
+
+        }
+    }
+}
+
+createItemEl = function(itemValue, itemId){
+
+    let li = document.createElement("li");
+
+    li.setAttribute("index", itemId);
+
+    li.appendChild(document.createTextNode(itemValue));
+
+    return li;
+}
+
+createRemoveTaskBtn = function(itemId){
+    let btn =  document.createElement("button");
+    btn.setAttribute("onclick", "removeTask("+itemId+")"); 
+    btn.innerHTML ="X";
+    return btn;
+}
+
+
+
+</script>
     </script>
    
 </body>
