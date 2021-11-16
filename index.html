@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+</head>
+<body>
+    <h1>Adicione a baixo suas tarefas</h1>
+    <div class=" lista">
+        <input type="text" value="tarefa">
+
+        <button onclick="myFunction()" value="add tarefa" style=" background-color: #4c56af;
+        border: none;
+        color: rgb(255, 255, 255);
+        padding: 15px 32px;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;">Adicionar tarefa</button>
+        <ul id=" minha lista">
+            <li> Intem 1 </li>
+           
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        var ul = document.getElementById("Minha lista");
+        var li;
+        var itemid;
+        var item;
+
+
+     addtarefa = function (){
+         if (document.getElementById("tarefa").value != ""){
+             item = document.getElementById("tarefa").value;
+             itemid = ul.clildElementCount;
+             li = createItemEl(itemid);
+             li.appendChild(createRemoverTarefa)
+
+         }
+     }
+     removertarefa =function(){
+
+     }
+
+     createItemEl = function(itemValue, itemId) {
+        let li = document.createElement("li");
+        li.setAttribute("index", itemid);
+        li.appendChild(document.createTextNode(itemValue));
+        return li;
+
+     }
+
+     tarefa = function (itemid){
+         let btn = document.createItemEl("button")
+    btn.setAttribute("onclick", removertarefa("++"));
+    btn.innetHTML = "X";
+
+
+     }
+
+    </script>
+   
+</body>
+</html>
