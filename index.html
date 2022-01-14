@@ -4,153 +4,127 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Tarefas</title>
-
+    <title>Calculadora</title>
+    <link href="style.css" rel="stylesheet">
     <style>
-		.content{
-			max-width: 400px;
-			max-height: 600px;
-			margin: auto;
-			background: #f3f3f3;
-			height: 450px;
-			padding: 2%;
-			border:1px solid;
-		}
-		.content h1{
-			text-align: center;
+		*{
+    padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+}
 
-		}
-		input[type=text]{
-			width: 80%;
-			height: 30px;
-			margin-bottom: 10px;
-		}
-		input[type=button]{
-			border: none;
-			width: 17%;
-			float: right;
-			height: 35px;
-		}
-		button:hover, input[type=button]:hover{
-			background: #ccc;
-		}
-
-		button, input[type=button]{ cursor: pointer; }
-
-		button{
-			float: right;
-			width: 25px;
-			padding: 5px;
-		}
-		ul{
-			list-style-type: none;
-			padding: 10px;
-			height: 250px;
-			background: #fff;
-			overflow-y: auto;
-		}
-		li{
-			height: 40px;
-			margin: 15px 0 15px 0;
-			border-bottom: 1px solid;
-
-
-		}
-
-
+body {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+td {
+    padding: 15px;
+}
 	</style>
+
 </head>
-<body style="background-color: aqua;">
-    <div class='content'>
-		
-
-        <div class="row">
-                
-                <div class="col-12">
-                    <h1> Lista de Tarefas </h1>
-                    <form>
-
-                        <input type="text" name="task" id='task' placeholder="Novo Item..." />
-                        <input type="button" name="" 
-                                onclick="addTask();" 
-                                value="add tarefa"/>
-
-                    </form>
-
-                </div>
-
-        </div>
+<body>
     <div>
-      
-                    <label>Adicione uma tarefa</label>
-                    <ul id="myList">	
-
-                    </ul>
-
-                </div>
-                
-
-            
-
-</div>
-
-
-<script type="text/javascript">
-
-let ul = document.getElementById("myList");
-let li;
-let itemId;
-let item;
-addTask	= function (){
+        <h1 id="tela"> </h1>
+        <h2 id="historico"></h2>
+        <input id="input"/>
+    <table>
+            <tr>
+                <td></td>
+                <td>C</td>
+                <td onclick="divisao()">/</td>
+                <td onclick="multiplicacao()">*</td>
+            </tr>
+            <tr>
+                <td id="7" onclick="mandovalor(7)">7</td>
+                <td id="8" onclick="mandovalor(8)">8</td>
+                <td id="9" onclick="mandovalor(9)">9</td>
+                <td onclick="menos()">-</td>
+            </tr>
+            <tr>
+                <td id="4" onclick="mandovalor(4)">4</td>
+                <td id="5" onclick="mandovalor(5)">5</td>
+                <td id="6" onclick="mandovalor(6)">6</td>
+                <td onclick="mais()">+</td>
+            </tr>
+            <tr>
+                <td id="1" onclick="mandovalor(1)">1</td>
+                <td id="2" onclick="mandovalor(2)">2</td>
+                <td id="3" onclick="mandovalor(3)">3</td>
+                <td onclick="resultado()">=</td>
+            </tr>
+        </div>
+    </table>
     
-    if(document.getElementById("task").value != ""){
+    <script>
+        //apontamentos
+        entrada = document.querySelector("#input")
+        let n1 = 0
+        let n2 = 0
+        let novo = 0
+        const tela = document.querySelector("#tela")
+        const historico = document.querySelector("#historico")
+        render(0)
+        entrada.focus()
 
-        item   = document.getElementById("task");
-
-        itemId = ul.childElementCount;
-
-        li 	   = createItemEl(item.value,itemId);
-        li.appendChild(createRemoveTaskBtn(itemId));
-        ul.appendChild(li);
-        item.value = "";
-    }
-
-}
-
-removeTask = function( itemId ){
-
-    for( i = 0 ; i < ul.children.length ; i++){
-
-        if(ul.children[i].getAttribute("index") == itemId ){
-
-            ul.children[i].remove();
-
+        function Verificarsevazio (valordigitado){
+            console.log(valordigitado)
+            if (isNaN(valordigitado)){
+                valordigitado = 0;
+            }
+            
+            return valordigitado
         }
-    }
-}
 
-createItemEl = function(itemValue, itemId){
+        function mais() {
+            n1 = parseFloat(tela.innerHTML)
+            n2 = Verificarsevazio(parseFloat(entrada.value))
+            n1 = n1 + n2
+           let valoranterior = historico.innerHTML
+           historico.innerHTML =  + n2 + " + " + valoranterior
+           console.log(historico.innerHTML)
+           entrada.focus()
+           render(n1)
+           entrada.value = ""
+        }
 
-    let li = document.createElement("li");
+        function menos() {
+            n1 = parseFloat(tela.innerHTML)
+            n2 = Verificarsevazio(parseFloat(entrada.value))
+            n1 = n1 - n2
+           let valoranterior = historico.innerHTML
+           historico.innerHTML =  + n2 + " - " + valoranterior
+           console.log(historico.innerHTML)
+           entrada.focus()
+           render(n1)
+           entrada.value = ""
+        }
 
-    li.setAttribute("index", itemId);
+        function multiplicacao() {
+            n1 = parseFloat(tela.innerHTML)
+            n2 = Verificarsevazio(parseFloat(entrada.value))
+            n1 = n1 * n2
+           render(n1)
+           entrada.value = ""
+           entrada.focus()
+        }
 
-    li.appendChild(document.createTextNode(itemValue));
+        function resultado() {
+            n1 = parseFloat(entrada.value)
+            render(n1)
+            entrada.value = ""
+            entrada.focus()
+        }
 
-    return li;
-}
+        function render(num) {
+            tela.innerHTML = num
+        }
 
-createRemoveTaskBtn = function(itemId){
-    let btn =  document.createElement("button");
-    btn.setAttribute("onclick", "removeTask("+itemId+")"); 
-    btn.innerHTML ="X";
-    return btn;
-}
-
-
-
-</script>
+        function mandovalor(valordigitado){        
+            entrada.value = entrada.value + valordigitado;
+        }
+        
     </script>
-   
 </body>
 </html>
